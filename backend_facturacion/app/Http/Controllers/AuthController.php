@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\SaveUserRequest;
 
 class AuthController extends Controller
 {
@@ -16,7 +18,21 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    public function register(SaveUserRequest $request)
+    {
+        User::create(array_merge(
+            $request->all(),
+            ['password' => bcrypt($request->password)]
+        ));
+        
+        return response() -> json([
+            'res' => true,
+            'msg' => 'Categoria guardada correctamente'
+
+        ]);
     }
 
     /**
@@ -64,7 +80,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(JWTAuth::refresh());
     }
 
     /**
@@ -79,7 +95,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => JWTAuth::factory()->getTTL() * 60
         ]);
     }
 }

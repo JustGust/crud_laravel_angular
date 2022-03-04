@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,7 @@ Route::group([
 
 ], function ($router) {
 
+    Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
    // Route::post('logout', 'AuthController@logout');
   //  Route::post('refresh', 'AuthController@refresh');
