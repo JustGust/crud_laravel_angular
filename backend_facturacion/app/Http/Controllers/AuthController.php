@@ -21,7 +21,7 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function register(SaveUserRequest $request)
+    public function register(Request $request)
     {
         User::create(array_merge(
             $request->all(),
@@ -80,7 +80,7 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(JWTAuth::refresh());
+        return $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -95,7 +95,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60
+            'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
