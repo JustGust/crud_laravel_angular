@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SaveUserRequest;
 
+
+
 class AuthController extends Controller
 {
     /**
@@ -27,12 +29,16 @@ class AuthController extends Controller
             $request->all(),
             ['password' => bcrypt($request->password)]
         ));
-        
-        return response() -> json([
-            'res' => true,
-            'msg' => 'Categoria guardada correctamente'
 
-        ]);
+        $credentials = request(['email', 'password']);
+
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+        
+     
     }
 
     /**

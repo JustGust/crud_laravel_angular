@@ -9,6 +9,13 @@ import { RegisterComponent } from './home/register/register.component';
 import { LoginComponent } from './home/login/login.component';
 import { SaveBillComponent } from './board/save-bill/save-bill.component';
 import { ListBillComponent } from './board/list-bill/list-bill.component';
+import { UserService } from './services/user.service';
+import { BillService } from './services/bill.service';
+import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthGuard } from './guard/auth.guard';
+
+import{ FormsModule, ReactiveFormsModule } from "@angular/forms";
+import{ HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -22,9 +29,21 @@ import { ListBillComponent } from './board/list-bill/list-bill.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    BillService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

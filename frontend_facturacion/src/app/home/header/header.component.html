@@ -7,13 +7,25 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <a href="#" routerLink="listBill" class="nav-link px-2 text-dark">Mis Facturas</a>
+                    <a *ngIf="_userService.loggedIn()" href="#" routerLink="listBill" class="nav-link px-2 text-dark">Mis Facturas</a>
                 </li>
             </ul>
 
             <div class="text-end">
-                <button type="button" routerLink="login" class="btn btn-outline-primary me-2">Inicio sesión</button>
-                <button type="button" routerLink="registerUser" class="btn btn-primary">Registrarme</button>
+                <button *ngIf="!_userService.loggedIn()" type="button" routerLink="login" class="btn btn-outline-primary me-2">Inicio sesión</button>
+                <button *ngIf="!_userService.loggedIn()" type="button" routerLink="registerUser" class="btn btn-primary">Registrarme</button>
+
+                <div *ngIf="_userService.loggedIn()" class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                      <img src="../../../assets/avatar.png" alt="mdo" width="40" height="40" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                      <li><a class="dropdown-item" routerLink="createBill"  href="#">Nueva factura...</a></li>
+                      <li><a class="dropdown-item" routerLink="listBill" href="#">Ver Facturas</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" (click)="logout()">cerrar sesion</a></li>
+                    </ul>
+                  </div>
             </div>
         </div>
     </div>
