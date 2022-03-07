@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SaveBillRequest;
 use App\Models\Bill;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -15,7 +16,13 @@ class BillController extends Controller
      */
     public function index()
     {
-        return Bill::all(); //return all date
+        $data = Bill::select('bills.id', 'bills.value_before_iva', 'bills.iva', 'bills.total_pay', 'bills.created_at',
+         'sellers.name', 'sellers.nit')
+                ->join('sellers', 'bills.seller_id', '=', 'sellers.id')
+                ->join('buyers', 'bills.buyer_id', '=', 'buyers.id')
+                ->get();
+
+        return $data;//return all date
     }
 
     /**

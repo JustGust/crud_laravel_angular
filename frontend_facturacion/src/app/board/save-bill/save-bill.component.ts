@@ -22,7 +22,10 @@ export class SaveBillComponent implements OnInit {
   sellers: Seller[] = [];
   buyers: Buyer[] = [];
   products: Item[] = [];
-  totalPay: Item[] = [];
+
+  totalPay: number = 0;
+  iva: number = 0;
+  totalbeforIva: number = 0
 
   constructor(
     private _billService: BillService,
@@ -123,8 +126,13 @@ export class SaveBillComponent implements OnInit {
       this.products = dataItem;
     });
 
-    this._itemService.getTotalPay(this.idBill).subscribe((dataItem: Item[]) => {
+    this._itemService.getTotalPay(this.idBill).subscribe((dataItem: any) => {
+
+
       this.totalPay = dataItem;
+      this.iva = ((this.totalPay * 19)/100);
+      this.totalbeforIva = this.totalPay - this.iva;
+
   })
   }
 
