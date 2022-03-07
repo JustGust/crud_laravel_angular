@@ -1,1 +1,147 @@
-<p>save-bill works!</p>
+<div class="scroll">
+    <div class="d-flex justify-content-between mt-3">
+        <h4>Formulario de registro</h4>
+        <a href="#" [routerLink]="['/listBill']" routerLinkActive="router-link-active"
+            class="btn btn-primaryt">Atras</a>
+    </div>
+
+    <hr />
+
+    <div class="row g-5">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-primary">Your cart</span>
+                <span class="badge bg-primary rounded-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Second product</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$8</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div>
+                        <h6 class="my-0">Third item</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">−$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul>
+
+            <form [formGroup]="formItem" (ngSubmit)="saveItem()" class="card p-2">
+                <div class="">
+                    <input type="text" class="form-control" placeholder="Descripcion" id="description" formControlName="description">
+                    <div *ngIf="g['description'].touched && g['description'].invalid" class="alert alert-danger">
+                        <div *ngIf="g['description'].errors && g['description'].errors['required']">
+                            Este campo es requerido.
+                        </div>
+                    </div>
+
+                    <input type="text" class="form-control" placeholder="Cantidad" id="amount" formControlName="amount">
+                    <div *ngIf="g['amount'].touched && g['amount'].invalid" class="alert alert-danger">
+                        <div *ngIf="g['amount'].errors && g['amount'].errors['required']"> Este campo es requerido. </div>
+                        <div *ngIf="g['amount'].errors && g['amount'].errors['pattern']"> Este campo debe ser numerico. </div>
+                    </div>
+
+                    <input type="text" class="form-control" placeholder="Costo" id="unit_value" formControlName="unit_value">
+                    <div *ngIf="g['unit_value'].touched && g['unit_value'].invalid" class="alert alert-danger">
+                        <div *ngIf="g['unit_value'].errors && g['unit_value'].errors['required']"> Este campo es requerido. </div>
+                        <div *ngIf="g['unit_value'].errors && g['unit_value'].errors['pattern']"> Este campo debe ser numerico. </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary mt-3" [disabled]="!formItem.valid">Agregar</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-md-7 col-lg-8">
+            <form [formGroup]="form" (ngSubmit)="saveBill()">
+                <div class="row g-3">
+
+
+                    <div class="col-sm-3 form-group mt-3">
+                        <label>Numero de factura</label>
+                        <input class="form-control" type="text" value="{{ idBill }}" aria-label="readonly input example"
+                            readonly />
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Emisor</label>
+                        <select class="form-select" aria-label="Default select example" id="seller_id"
+                            formControlName="seller_id">
+                            <div *ngIf="f['seller_id'].errors && f['seller_id'].errors['required']">
+                                Este campo es requerido.
+                            </div>
+                            <option selected></option>
+                            <option *ngFor="let seller of sellers" value="{{seller.id}}">{{seller.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Comprador</label>
+                        <select class="form-select" aria-label="Default select example" id="buyer_id"
+                            formControlName="buyer_id">
+                            <div *ngIf="f['buyer_id'].errors && f['buyer_id'].errors['required']">
+                                Este campo es requerido.
+                            </div>
+                            <option selected></option>
+                            <option *ngFor="let buyer of buyers" value="{{buyer.id}}">{{buyer.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Valor sin iva</label>
+                        <input type="text" class="form-control" id="value_before_iva"
+                            formControlName="value_before_iva" />
+                        <div *ngIf="f['buyer_id'].touched && f['buyer_id'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['value_before_iva'].errors && f['value_before_iva'].errors['required']">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>iva</label>
+                        <input type="text" class="form-control" id="iva" formControlName="iva" />
+                        <div *ngIf="f['iva'].touched && f['iva'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['iva'].errors && f['iva'].errors['required']">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label>total a pagar</label>
+                        <input type="text" class="form-control" id="total_pay" formControlName="total_pay" />
+                        <div *ngIf="f['total_pay'].touched && f['total_pay'].invalid" class="alert alert-danger">
+                            <div *ngIf="f['total_pay'].errors && f['total_pay'].errors['required']">
+                                Este campo es requerido.
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-3 mb-3" type="submit" [disabled]="!form.valid">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
