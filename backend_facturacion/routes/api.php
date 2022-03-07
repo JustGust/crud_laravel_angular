@@ -58,3 +58,5 @@ Route::get('buyer', [BuyerController::class, 'index']); //route show all seller
 /* --------- route for item -------- */
 
 Route::post('item', [ItemController::class, 'store']); //route register item
+Route::get('item/{id}',[ ItemController::class, 'show']); // route show Item by id
+Route::get('item/total/{id}',[ ItemController::class, 'totalPay']);

@@ -14,7 +14,7 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id')->nullable(true);
             $table->string('description');
             $table->integer('amount');
             $table->integer('unit_value');

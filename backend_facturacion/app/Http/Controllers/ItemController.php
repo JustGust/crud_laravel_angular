@@ -41,7 +41,8 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Item::where('id', $id)->get();
+        return response()->json($data, 200);
     }
 
     /**
@@ -66,4 +67,11 @@ class ItemController extends Controller
     {
         //
     }
+
+    public function totalPay($id)
+    {
+        $data = Item::where('id', $id)->get()->sum('value');
+        return response()->json($data, 200);
+    }
+
 }
