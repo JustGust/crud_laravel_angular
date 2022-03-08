@@ -1,0 +1,14 @@
+
+backend
+
+1: crear base de datos llamada pruebaTecnicaFactura
+2: modificar el archivo .env con la informacion de tu servidor de db
+3: ejecutar los comandos:
+   php artisan migrate
+   php artisan db:seed
+   php artisan serve
+
+forndend
+
+1: ejecutar los comandos:
+   ng serve --open
