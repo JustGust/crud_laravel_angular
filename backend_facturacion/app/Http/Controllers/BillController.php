@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SaveBillRequest;
 use App\Models\Bill;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\SaveBillRequest;
 
 class BillController extends Controller
 {
@@ -16,12 +17,12 @@ class BillController extends Controller
      */
     public function index()
     {
-        $data = Bill::select('bills.id', 'bills.value_before_iva', 'bills.iva', 'bills.total_pay', 'bills.created_at',
-         'sellers.name', 'sellers.nit')
+         $data = Bill::select('bills.id', 'bills.value_before_iva', 'bills.iva', 'bills.total_pay', 'bills.created_at',
+         'sellers.name as seller_name', 'sellers.nit as seller_nit', 'buyers.name as buyer_name', 'buyers.nit as buyer_nit')
                 ->join('sellers', 'bills.seller_id', '=', 'sellers.id')
                 ->join('buyers', 'bills.buyer_id', '=', 'buyers.id')
                 ->get();
-
+ 
         return $data;//return all date
     }
 
@@ -72,6 +73,11 @@ class BillController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dataBill = Bill::find($id)->delete();
+        $dataItem = Item::find($id)->delete();
+        return response()->json([
+            'message' => "Successfully deleted",
+            'res' => true
+        ], 200);
     }
 }

@@ -65,7 +65,11 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Item::find($id)->delete();
+        return response()->json([
+            'message' => "Successfully deleted",
+            'res' => true
+        ], 200);
     }
 
     public function totalPay($id)

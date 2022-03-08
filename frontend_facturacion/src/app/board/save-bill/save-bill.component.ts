@@ -80,31 +80,42 @@ export class SaveBillComponent implements OnInit {
   /* ------ save bill -------- */
 
   saveBill() {
-    this.form.value.id = this.idBill;
-    this.form.value.total_pay = this.totalPay;
-    this.form.value.iva = this.totalPay;
-    this.form.value.value_before_iva = this.totalPay;
-    
 
-    this._billService.registerBill(this.form.value).subscribe({
-      next: (v) => {
-        this._router.navigate(['/listBill']);
-        console.log('registro exitoso');
-      },
+    if(!this.totalPay){
 
-      error: (e) => {
-        this.message = e;
-      },
-    });
+      this.message = 'debes agregar los item a facturar';
+
+    }else{
+
+      this.form.value.id = this.idBill;
+      this.form.value.total_pay = this.totalPay;
+      this.form.value.iva = this.iva;
+      this.form.value.value_before_iva = this.totalbeforIva;
+      
+  
+      this._billService.registerBill(this.form.value).subscribe({
+        next: (v) => {
+          this._router.navigate(['/listBill']);
+          console.log('registro exitoso');
+        },
+  
+        error: (e) => {
+          this.message = e;
+        },
+      });
+    }
   }
 
   /* ------ save item -------- */
 
   saveItem() {
-    this.formItem.value.id = this.idBill;
+    
     this.billItemTotal =
-      this.formItem.value.amount * this.formItem.value.unit_value;
+    this.formItem.value.amount * this.formItem.value.unit_value;
     this.formItem.value.value = this.billItemTotal;
+
+
+    this.formItem.value.id = this.idBill;
 
     this._itemService.registerItem(this.formItem.value).subscribe({
       next: (v) => {
@@ -146,4 +157,16 @@ export class SaveBillComponent implements OnInit {
       this.buyers = dataBuyer;
     });
   }
+
+  deleteAllItem(id: number){
+    this._itemService.delete(id).subscribe(res => {
+         this.products = this.products.filter(item => item.id !== id);
+        this.message = 'Items Eliminados con exito!';
+
+       this.totalPay = 0;
+       this.iva= 0;
+       this.totalbeforIva = 0;
+    })
+  }
+
 }

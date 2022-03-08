@@ -45,6 +45,7 @@ Route::group([
 
 Route::get('bill', [BillController::class, 'index']); //route show all bill
 Route::post('bill', [BillController::class, 'store']); //route register bill
+Route::get('bill/delete/{id}', [BillController::class, 'destroy']); //route delete bill
 
 
 /* --------- route for seller -------- */
@@ -59,4 +60,5 @@ Route::get('buyer', [BuyerController::class, 'index']); //route show all seller
 
 Route::post('item', [ItemController::class, 'store']); //route register item
 Route::get('item/{id}',[ ItemController::class, 'show']); // route show Item by id
-Route::get('item/total/{id}',[ ItemController::class, 'totalPay']);
+Route::get('item/total/{id}',[ ItemController::class, 'totalPay']); // route show total pay
+Route::get('item/delete/{id}',[ ItemController::class, 'destroy']); ////route delete item

@@ -1,26 +1,94 @@
-<section>
-    <div class="d-flex justify-content-between mt-3">
-      <h4>Lista de facturas</h4>
-      <a routerLink="/createBill" class="btn btn-success">Crear nueva factura</a>
-    </div>  
+<section class="scroll">
+  <div class="d-flex justify-content-between mt-3">
+    <h4>Lista de facturas</h4>
+    <a routerLink="/createBill" class="btn btn-success">Crear nueva factura</a>
+  </div>
 
-    <div class="input-group ml-6 search">
-      <input type="search" class="form-control rounded" placeholder="Buscar por numero de factura" aria-label="Search" aria-describedby="search-addon" />
-      <button type="button" class="btn btn-outline-primary">buscar</button>
-    </div>
-    <hr />
+  <hr>
+  <div *ngIf="message" class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
 
-  
-    
-
-    <div class="accordion accordion-flush" id="accordionFlushExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-            Numero de factura: 656565
+  <table class="table align-middle">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">VENDEDOR</th>
+        <th scope="col">COMPRADOR</th>
+        <th scope="col">VALOR ANTES DEL IVA</th>
+        <th scope="col">IVA</th>
+        <th scope="col">TOTAL</th>
+        <th scope="col">ACCIONES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of bills">
+        <th scope="row">{{bill.id}}</th>
+        <td>
+          <!-- Button trigger modal seller -->
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            {{bill.seller_name}}
           </button>
-        </h2>
-        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-        </div>
-      </div>
+
+          <!-- Modal seller -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Mas Información</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  NIT: {{bill.seller_nit}}
+                  NOMBRE: {{bill.seller_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+             <!-- Button trigger modal buyer -->
+             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+              {{bill.buyer_name}}
+            </button>
+  
+            <!-- Modal buyer -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Mas Información</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <span class="badge bg-success">NIT: {{bill.buyer_nit}}</span>
+                   <p>NOMBRE: {{bill.buyer_name}}</p> 
+                  </div>
+                </div>
+              </div>
+            </div>
+        </td>
+        <td>
+          $ {{bill.value_before_iva}}
+        </td>
+        <td>
+          $ {{bill.iva}}
+        </td>
+
+        <td>
+          $ {{bill.total_pay}}
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm px-3">
+            Items facturados
+          </button>
+          <button type="button" (click)="deleteBill(bill.id)"  class="btn btn-danger btn-sm px-3">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

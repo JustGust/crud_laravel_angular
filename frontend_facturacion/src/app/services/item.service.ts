@@ -30,4 +30,10 @@ export class ItemService {
     )
   }
 
+  delete(id: number){
+    return this._http.get<Item>(this.env + 'item/delete/' + id)
+    .pipe(
+    )
+  }
+
 }

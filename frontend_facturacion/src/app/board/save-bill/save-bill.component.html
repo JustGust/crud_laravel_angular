@@ -1,11 +1,14 @@
 <div class="scroll">
     <div class="d-flex justify-content-between mt-3">
         <h4>Formulario de registro</h4>
-        <a href="#" [routerLink]="['/listBill']" routerLinkActive="router-link-active"
-            class="btn btn-primaryt">Atras</a>
     </div>
 
     <hr />
+
+    <div *ngIf="message" class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
 
     <div class="row g-5">
         <div class="col-md-5 col-lg-4 order-md-last">
@@ -59,7 +62,8 @@
                         <div *ngIf="g['unit_value'].errors && g['unit_value'].errors['required']"> Este campo es requerido. </div>
                         <div *ngIf="g['unit_value'].errors && g['unit_value'].errors['pattern']"> Este campo debe ser numerico. </div>
                     </div>
-                    <button type="submit" class="btn btn-secondary mt-3" [disabled]="!formItem.valid">Agregar</button>
+                    <button type="submit" class="btn btn-secondary mt-3 ml-3" [disabled]="!formItem.valid">Agregar</button>
+                    <button *ngIf="totalPay" (click)="deleteAllItem(idBill)" type="button" class="btn btn-primary mt-3">Eliminar Items</button>
                 </div>
             </form>
         </div>
