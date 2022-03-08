@@ -1,3 +1,51 @@
-.search{
-    width: 30%;
+
+
+body {
+  color:#484848;
+  font-size:.86rem;
 }
+
+
+.main {
+    margin-left:320px;
+}
+
+.invoice-list {
+    position:absolute;
+    top:68px;
+    left:5px;
+    
+ 
+}
+
+.container {
+  max-width:1200px;
+    min-width:420px;
+}
+
+
+
+.svg-icon {
+  width: 1.2em;
+  height: 1.2em;
+    padding:0;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #6A1B9A;
+}
+
+.svg-icon circle {
+  stroke: #6A1B9A;
+  stroke-width: 1;
+}
+
+.footer .footer-app {
+    text-align:center;
+    font-size:.78rem;
+    padding:10px;
+}
+
+

@@ -26,50 +26,20 @@
       <tr *ngFor="let bill of bills">
         <th scope="row">{{bill.id}}</th>
         <td>
-          <!-- Button trigger modal seller -->
-          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            {{bill.seller_name}}
-          </button>
-
-          <!-- Modal seller -->
-          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel">Mas Información</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  NIT: {{bill.seller_nit}}
-                  NOMBRE: {{bill.seller_name}}
-                </div>
-              </div>
+          <div>
+            <p>NIT: {{bill.seller_nit}}</p>
             </div>
-          </div>
+            <div>
+              <p>NOMBRE: {{bill.seller_name}}</p>
+            </div>
         </td>
         <td>
-             <!-- Button trigger modal buyer -->
-             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              {{bill.buyer_name}}
-            </button>
-  
-            <!-- Modal buyer -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-              aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Mas Información</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <span class="badge bg-success">NIT: {{bill.buyer_nit}}</span>
-                   <p>NOMBRE: {{bill.buyer_name}}</p> 
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div>
+          <p>NIT: {{bill.buyer_nit}}</p>
+          </div>
+          <div>
+            <p>NOMBRE: {{bill.buyer_name}}</p>
+          </div>
         </td>
         <td>
           $ {{bill.value_before_iva}}
@@ -82,10 +52,75 @@
           $ {{bill.total_pay}}
         </td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm px-3">
-            Items facturados
+        <td>
+          <!-- Button trigger modal seller -->
+          <button type="button" (click)="showItem(bill.id)" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+            data-bs-target="#staticBackdro">
+            Informacion de factura
           </button>
-          <button type="button" (click)="deleteBill(bill.id)"  class="btn btn-danger btn-sm px-3">
+
+          <!-- Modal seller -->
+          <div class="modal fade " id="staticBackdro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Mas Información</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="main">
+                    <div class="container mt-3">
+                      <div class="card animate__animated animate__fadeIn">
+                        <div class="card-header">
+                          Fecha
+                          <strong>{{bill.created_at}}</strong>
+
+                        </div>
+                        <div class="card-body">
+
+                          <div class="table-responsive-sm">
+                            <table class="table table-sm table-striped">
+                              <thead>
+                                <tr>
+                                  <th scope="col" width="2%" class="center">#</th>
+                                  <th scope="col" class="d-none d-sm-table-cell" width="40%">Descripción</th>
+                                  <th scope="col" width="8%" class="text-right">Num.</th>
+                                  <th scope="col" width="10%" class="text-right">Total</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of items">
+                                  <td class="text-left">{{item.id}}</td>
+                                  <td class="item_name">{{item.description}}</td>
+                                  <td class="item_desc d-none d-sm-table-cell">{{item.amount}}</td>
+                                  <td class="item_desc d-none d-sm-table-cell">{{item.value}}</td>
+
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="row">
+                            <div class="col-lg-4 col-sm-5">
+                            </div>
+
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <button type="button" (click)="deleteBill(bill.id)" class="btn btn-danger btn-sm px-3">
             Eliminar
           </button>
         </td>

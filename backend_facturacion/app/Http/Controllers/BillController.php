@@ -50,7 +50,8 @@ class BillController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Bill::where('id', $id)->get();
+        return response()->json($data, 200);
     }
 
     /**
