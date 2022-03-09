@@ -34,6 +34,12 @@ export class BillService {
     )
   }
 
+  getBill(id: number){
+    return this._http.get<Bill[]>(this.env + 'bill/' + id)
+    .pipe(
+    )
+  }
+
   getAllBill(){
     return this._http.get<Bill[]>(this.env + 'bill')
     .pipe(

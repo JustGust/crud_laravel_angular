@@ -10,6 +10,23 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 
+  <form [formGroup]="form" (ngSubmit)="showBill()">
+    <div class="input-group" style="width: 30%;">
+      <input type="search" class="form-control rounded" placeholder="ID" aria-label="Search"
+        aria-describedby="search-addon" id="search" formControlName="search" />
+      <button type="submit" class="btn btn-outline-primary" [disabled]="!form.valid">buscar</button>
+    </div>
+    <div *ngIf="g['search'].touched && g['search'].invalid" class="alert alert-danger">
+      <div *ngIf="g['search'].errors && g['search'].errors['required']"> Debes ingresar el id de la factura. </div>
+      <div *ngIf="g['search'].errors && g['search'].errors['pattern']"> Este campo debe ser numerico. </div>
+    </div>
+  </form>
+
+  <button type="button" (click)='showAllBill()' class="btn btn-outline-primary mt-3">Cargar todas</button>
+
+
+  <hr>
+
   <table class="table align-middle">
     <thead>
       <tr>
@@ -28,14 +45,14 @@
         <td>
           <div>
             <p>NIT: {{bill.seller_nit}}</p>
-            </div>
-            <div>
-              <p>NOMBRE: {{bill.seller_name}}</p>
-            </div>
+          </div>
+          <div>
+            <p>NOMBRE: {{bill.seller_name}}</p>
+          </div>
         </td>
         <td>
           <div>
-          <p>NIT: {{bill.buyer_nit}}</p>
+            <p>NIT: {{bill.buyer_nit}}</p>
           </div>
           <div>
             <p>NOMBRE: {{bill.buyer_name}}</p>
