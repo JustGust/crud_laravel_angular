@@ -15,6 +15,8 @@ import { AuthGuard } from './guard/auth.guard';
 import{ FormsModule, ReactiveFormsModule } from "@angular/forms";
 import{ HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { BillService } from './services/bill.service';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,8 @@ import { BillService } from './services/bill.service';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [
     UserService,

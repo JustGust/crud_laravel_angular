@@ -5,6 +5,7 @@ import { ItemService } from '../../services/item.service';
 import { Bill } from '../../model/bill';
 import { Item } from '../../model/item';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { faCoffee, faTrash, faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-list-bill',
   templateUrl: './list-bill.component.html',
@@ -15,6 +16,8 @@ export class ListBillComponent implements OnInit {
   bills: Bill[] = [];
   items: Item[] = [];
   message: string = '';
+  iconTrash = faTrash;
+  iconBill = faFileInvoiceDollar;
 
   constructor(
     private _billService: BillService,

@@ -73,7 +73,7 @@
           <!-- Button trigger modal seller -->
           <button type="button" (click)="showItem(bill.id)" class="btn btn-primary btn-sm" data-bs-toggle="modal"
             data-bs-target="#staticBackdro">
-            Informacion de factura
+            <fa-icon [icon]="iconBill"></fa-icon>
           </button>
 
           <!-- Modal seller -->
@@ -137,8 +137,8 @@
           </div>
         </td>
         <td>
-          <button type="button" (click)="deleteBill(bill.id)" class="btn btn-danger btn-sm px-3">
-            Eliminar
+          <button type="button" (click)="deleteBill(bill.id)" class="btn btn-danger btn-sm">
+            <fa-icon [icon]="iconTrash"></fa-icon>
           </button>
         </td>
       </tr>
